@@ -23,16 +23,16 @@
         </tr>
       </thead>
       <tbody>
-        @forelse ($loadDataUser as $data)
+        @forelse ($loadDataUser as $index => $data)
         <tr>
-          <th>1</th>
+          <th>{{ $loadDataUser->firstItem() + $index }}</th>
           <td>{{ $data->fullname }}</td>
           <td>{{ $data->username }}</td>
           <td>{{ $data->master_role ? $data->master_role->name : '-' }}</td>
           <td>{{ $data->created_by }}</td>
           <td>{{ $data->created_at }}</td>
           <td>
-            <a href="#">
+            <a wire:click='openDetailData({{ $data->id }})' href="javascript:void(0)">
               Detail <i class='bx bx-edit-alt'></i>
             </a>
           </td>
@@ -54,9 +54,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="modalAddLabel">Tambah Staff</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button wire:click='ClearData()' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form wire:submit.prevent="storeNewStaff()">
+        <form wire:submit.prevent="actionForm()">
           <div class="modal-body">
             <div class="mb-2">
               <div>
@@ -76,6 +76,7 @@
               <span class="text-danger">{{ $message }}</span>
               @enderror
             </div>
+            @if ($isStore == true)
             <div class="mb-2">
               <div>
                 <label for="password" class="form-label m-0">Password:</label>
@@ -94,6 +95,7 @@
               <span class="text-danger">{{ $message }}</span>
               @enderror
             </div>
+            @endif
             <div class="mb-2">
               <div>
                 <label for="email" class="form-label m-0">Email:</label>
@@ -119,7 +121,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            <button wire:click='ClearData()' type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary">Simpan</button>
           </div>
         </form>
@@ -128,13 +130,13 @@
   </div>
 </div>
 
-{{-- <script>
+<script>
   window.addEventListener('close-form-modal', event => {
     $('#modalAdd').modal('hide');
     $('#modalEdit').modal('hide');
     $('#modalDelete').modal('hide');
   });
   window.addEventListener('open-edit-modal', event => {
-    $('#modalEdit').modal('show');
+    $('#modalAdd').modal('show');
   });
-</script> --}}
+</script>

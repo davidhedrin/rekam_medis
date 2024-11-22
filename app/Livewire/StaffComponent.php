@@ -18,6 +18,7 @@ class StaffComponent extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $username, $password, $co_password, $fullname, $role_id, $email;
+    public $idUserEdit, $isStore = true;
 
     public function ClearData() {
         $this->username = null;
@@ -26,6 +27,9 @@ class StaffComponent extends Component
         $this->fullname = null;
         $this->role_id = null;
         $this->email = null;
+        $this->isStore = true;
+        
+        $this->idUserEdit = null;
     }
 
     public function updated($fields) {
@@ -39,19 +43,12 @@ class StaffComponent extends Component
         ]);
     }
 
-    public function loadAllData(){
-        $loadDataUser = User::with(['master_role:id,slug,name'])->
-        select('id','username','fullname','role_id','created_by','created_at')->
-        paginate(10);
-
-        $dataMasterRole = MRole::select('id','name')->get();
-        return [
-            'loadDataUser' => $loadDataUser,
-            'dataMasterRole' => $dataMasterRole
-        ];
+    public function actionForm() {
+        if($this->isStore == true) $this->storeNewData();
+        else if($this->isStore == false) $this->updateData();
     }
 
-    public function storeNewStaff() {
+    public function storeNewData() {
         $this->validate([
             'username' => 'required|unique:users,username',
             'password' => 'required|same:co_password|min:6',
@@ -77,7 +74,7 @@ class StaffComponent extends Component
             DB::commit();
             
             $this->ClearData();
-            // $this->dispatchBrowserEvent('close-form-modal');
+            $this->dispatch('close-form-modal');
             session()->flash('msgAlert', [
               'title' => 'Simpan Berhasil',
               'status' => 'success',
@@ -93,6 +90,94 @@ class StaffComponent extends Component
               'message' => $error_msg
             ]);
         }
+    }
+
+    public function openDetailData($id) {
+        $this->ClearData();
+        $findData = User::find($id);
+
+        if(!$findData){
+            session()->flash('msgAlert', [
+                'title' => 'Tidak Ditemukan!',
+                'status' => 'warning',
+                'message' => 'Data user tidak ditemukan!'
+            ]);
+            return;
+        }
+
+        $this->isStore = false;
+        $this->username = $findData->username;
+        $this->fullname = $findData->fullname;
+        $this->role_id = $findData->role_id;
+        $this->email = $findData->email;
+        $this->dispatch('open-edit-modal');
+
+        $this->idUserEdit = $id;
+    }
+
+    public function updateData() {
+        try{
+            $findData = User::find($this->idUserEdit);
+            if(!$findData){
+                session()->flash('msgAlert', [
+                    'title' => 'Tidak Ditemukan!',
+                    'status' => 'warning',
+                    'message' => 'Data user tidak ditemukan!'
+                ]);
+                return;
+            }
+            
+            $rulesValidate = [
+                'fullname' => 'required',
+                'role_id' => 'required',
+                'email' => 'email',
+            ];
+    
+            if($findData->username != $this->username) $rulesValidate['username'] = 'required|unique:users,username';
+            $this->validate($rulesValidate);
+
+            
+            $auth = Auth::user();
+            DB::beginTransaction();
+
+            $findData->username = $this->username;
+            $findData->fullname = $this->fullname;
+            $findData->role_id = $this->role_id;
+            $findData->email = $this->email;
+            $findData->updated_by = $auth->username;
+            $findData->save();
+            
+            DB::commit();
+            
+            $this->ClearData();
+            $this->dispatch('close-form-modal');
+            session()->flash('msgAlert', [
+              'title' => 'Update Berhasil',
+              'status' => 'success',
+              'message' => 'Data staff berhasil diperbaharui!'
+            ]);
+        }catch(Exception $e){
+            DB::rollBack();
+            $error_msg = $e->getMessage();
+            
+            session()->flash('msgAlert', [
+              'title' => 'Gagal Login',
+              'status' => 'warning',
+              'message' => $error_msg
+            ]);
+        }
+    }
+
+    public function loadAllData(){
+        $loadDataUser = User::with(['master_role:id,slug,name'])->
+        select('id','username','fullname','role_id','created_by','created_at')->
+        paginate(10);
+
+        $dataMasterRole = MRole::select('id','name')->get();
+        return [
+            'loadDataUser' => $loadDataUser,
+            'dataMasterRole' => $dataMasterRole
+        ];
     }
 
     public function render()
