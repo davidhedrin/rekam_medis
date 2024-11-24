@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="{{ asset('assets/boxicons/css/boxicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/font.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css">
+  
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  @stack('styles')
   @livewireStyles
 </head>
 
@@ -66,12 +69,20 @@
   <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
   <script src="{{ asset('assets/js/popper.min.js') }}"></script>
   <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <script>
     const hamBurger = document.querySelector(".toggle-btn");
+      
+    $(document).ready(function() {
+      $('.search-dropdown').select2({
+        placeholder: "Silahkan pilih opsi",
+        allowClear: true
+      });
 
-    hamBurger.addEventListener("click", function () {
-      document.querySelector("#sidebar").classList.toggle("expand");
+      hamBurger.addEventListener("click", function () {
+        document.querySelector("#sidebar").classList.toggle("expand");
+      });
     });
   </script>
   @stack('scripts')

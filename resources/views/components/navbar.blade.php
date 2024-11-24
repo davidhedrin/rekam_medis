@@ -23,8 +23,13 @@
             </div>
             <i class='bx bx-user-circle fs-4'></i>
           </div>
-          <div class="dropdown-menu dropdown-menu-end rounded">
-
+          <div class="dropdown-menu dropdown-menu-end rounded px-3">
+            <div class="text-dark">
+              <a href=""><i class='bx bx-user-circle fs-6'></i> <small>Profil</small></a>
+            </div>
+            <div class="text-dark">
+              <a href="{{ route('logout') }}"><i class='bx bx-log-out fs-6'></i> <small>Logout</small></a>
+            </div>
           </div>
         </li>
       </ul>

@@ -4,7 +4,7 @@
   @endif
   
   <div class="mb-2 text-end">
-    <button type="button" class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalAdd">
+    <button wire:click='ClearData()' type="button" class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalAdd">
       Tambah
       <i class='bx bx-user-plus fs-5 ms-1'></i>
     </button>
@@ -23,9 +23,9 @@
         </tr>
       </thead>
       <tbody>
-        @forelse ($loadDataUser as $index => $data)
+        @forelse ($loadData as $index => $data)
         <tr>
-          <th>{{ $loadDataUser->firstItem() + $index }}</th>
+          <th>{{ $loadData->firstItem() + $index }}</th>
           <td>{{ $data->fullname }}</td>
           <td>{{ $data->username }}</td>
           <td>{{ $data->master_role ? $data->master_role->name : '-' }}</td>
@@ -46,10 +46,10 @@
     </table>
   </div>
   <div class="mt-2">
-    {{ $loadDataUser->links() }}
+    {{ $loadData->links() }}
   </div>
 
-  <div wire:ignore.self class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddLabel" aria-hidden="true">
+  <div wire:ignore.self class="modal fade" id="modalAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">

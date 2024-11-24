@@ -12,23 +12,23 @@
     <li class="sidebar-item">
       <a href="{{ route('home') }}" class="d-flex align-items-center items-center sidebar-link">
         <div>
-          <i class='bx bx-tachometer fs-4'></i>
+          <i class='bx bx-tachometer fs-5'></i>
         </div>
         <span>Dashboard</span>
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="#" class="d-flex align-items-center items-center sidebar-link">
+      <a href="{{ route('rekam-medis') }}" class="d-flex align-items-center items-center sidebar-link">
         <div>
-          <i class='bx bx-book-bookmark fs-4'></i>
+          <i class='bx bx-book-bookmark fs-5'></i>
         </div>
         <span>Rekam Medis</span>
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="#" class="d-flex align-items-center items-center sidebar-link">
+      <a href="{{ route('patient') }}" class="d-flex align-items-center items-center sidebar-link">
         <div>
-          <i class='bx bx-user-pin fs-4'></i>
+          <i class='bx bx-user-pin fs-5'></i>
         </div>
         <span>Pasien</span>
       </a>
@@ -36,7 +36,7 @@
     <li class="sidebar-item">
       <a href="{{ route('staff') }}" class="d-flex align-items-center items-center sidebar-link">
         <div>
-          <i class='bx bx-group fs-4'></i>
+          <i class='bx bx-group fs-5'></i>
         </div>
         <span>Staff</span>
       </a>
@@ -44,7 +44,7 @@
     <li class="sidebar-item">
       <a href="#" class="d-flex align-items-center items-center sidebar-link">
         <div>
-          <i class='bx bx-user-circle fs-4'></i>
+          <i class='bx bx-user-circle fs-5'></i>
         </div>
         <span>Profile</span>
       </a>
@@ -92,7 +92,7 @@
   <div class="sidebar-footer">
     <a href="{{ route('logout') }}" class="d-flex align-items-center items-center sidebar-link">
       <div>
-        <i class='bx bx-log-out fs-4'></i>
+        <i class='bx bx-log-out fs-5'></i>
       </div>
       <span>Logout</span>
     </a>

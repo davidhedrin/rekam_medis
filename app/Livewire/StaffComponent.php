@@ -18,7 +18,7 @@ class StaffComponent extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $username, $password, $co_password, $fullname, $role_id, $email;
-    public $idUserEdit, $isStore = true;
+    public $idDataEdit, $isStore = true;
 
     public function ClearData() {
         $this->username = null;
@@ -29,7 +29,7 @@ class StaffComponent extends Component
         $this->email = null;
         $this->isStore = true;
         
-        $this->idUserEdit = null;
+        $this->idDataEdit = null;
     }
 
     public function updated($fields) {
@@ -62,14 +62,14 @@ class StaffComponent extends Component
             $auth = Auth::user();
             DB::beginTransaction();
 
-            $newStaff = new User;
-            $newStaff->username = $this->username;
-            $newStaff->password = Hash::make($this->password);
-            $newStaff->fullname = $this->fullname;
-            $newStaff->role_id = $this->role_id;
-            $newStaff->email = $this->email;
-            $newStaff->created_by = $auth->username;
-            $newStaff->save();
+            $newData = new User;
+            $newData->username = $this->username;
+            $newData->password = Hash::make($this->password);
+            $newData->fullname = $this->fullname;
+            $newData->role_id = $this->role_id;
+            $newData->email = $this->email;
+            $newData->created_by = $auth->username;
+            $newData->save();
             
             DB::commit();
             
@@ -85,7 +85,7 @@ class StaffComponent extends Component
             $error_msg = $e->getMessage();
             
             session()->flash('msgAlert', [
-              'title' => 'Gagal Login',
+              'title' => 'Gagal Menyimpan',
               'status' => 'warning',
               'message' => $error_msg
             ]);
@@ -112,12 +112,12 @@ class StaffComponent extends Component
         $this->email = $findData->email;
         $this->dispatch('open-edit-modal');
 
-        $this->idUserEdit = $id;
+        $this->idDataEdit = $id;
     }
 
     public function updateData() {
         try{
-            $findData = User::find($this->idUserEdit);
+            $findData = User::find($this->idDataEdit);
             if(!$findData){
                 session()->flash('msgAlert', [
                     'title' => 'Tidak Ditemukan!',
@@ -161,7 +161,7 @@ class StaffComponent extends Component
             $error_msg = $e->getMessage();
             
             session()->flash('msgAlert', [
-              'title' => 'Gagal Login',
+              'title' => 'Gagal Update',
               'status' => 'warning',
               'message' => $error_msg
             ]);
@@ -169,13 +169,13 @@ class StaffComponent extends Component
     }
 
     public function loadAllData(){
-        $loadDataUser = User::with(['master_role:id,slug,name'])->
+        $loadData = User::with(['master_role:id,slug,name'])->
         select('id','username','fullname','role_id','created_by','created_at')->
         paginate(10);
 
         $dataMasterRole = MRole::select('id','name')->get();
         return [
-            'loadDataUser' => $loadDataUser,
+            'loadData' => $loadData,
             'dataMasterRole' => $dataMasterRole
         ];
     }
