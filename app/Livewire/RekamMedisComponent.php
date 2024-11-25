@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 
 use App\Models\MedicalRecord;
 use App\Models\MedicalRecordDetail;
+use App\Models\Patient;
 
 class RekamMedisComponent extends Component
 {
@@ -19,6 +20,25 @@ class RekamMedisComponent extends Component
     
     public $record_num, $user_id, $user_name, $patient_id, $patient_name, $desc;
     public $idDataEdit, $isStore = true;
+
+    public $listPatient = [], $searchPatient = '';
+    public $selectedPatient = null;
+
+    public function mount() {
+        $this->LoadListPatient();
+    }
+
+    public function LoadListPatient() {
+        $patients = Patient::whereRaw('LOWER(fullname) LIKE ?', ['%' . strtolower($this->searchPatient) . '%'])->
+        paginate(10);
+
+        $this->listPatient = $patients->items();
+    }
+
+    public function onchangeSelectPatient($data) {
+        $this->patient_id = $data['id'];
+        $this->selectedPatient = json_decode(json_encode($data));
+    }
     
     public function ClearData() {
         $this->record_num = null;
@@ -30,6 +50,7 @@ class RekamMedisComponent extends Component
         $this->isStore = true;
         
         $this->idDataEdit = null;
+        $this->selectedPatient = null;
     }
 
     public function updated($fields) {
@@ -62,7 +83,7 @@ class RekamMedisComponent extends Component
             $auth = Auth::user();
             DB::beginTransaction();
             
-            $record_num = 'RM' . Carbon::now()->timestamp . strtoupper(Str::random(6));
+            $record_num = 'RM/' . Carbon::now()->format('d-m-y') . '/' . Carbon::now()->timestamp . strtoupper(Str::random(4));
             $newData = new MedicalRecord;
             $newData->record_num = $record_num;
             $newData->user_id = $auth->id;
@@ -83,7 +104,11 @@ class RekamMedisComponent extends Component
               'message' => 'Rekam medis baru berhasil ditambahkan!'
             ]);
 
-            return redirect()->route('rekam-medis-detail', ['id' => $id]);
+            session()->flash('activePage', [
+                'name' => 'Rekam Medis / Detail',
+                'icon' => 'bx bx-book-add'
+            ]);
+            return redirect()->route('rekam-medis-detail', ['id' => $newData->id]);
         }catch(Exception $e){
             DB::rollBack();
             $error_msg = $e->getMessage();

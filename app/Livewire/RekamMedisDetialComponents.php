@@ -35,6 +35,11 @@ class RekamMedisDetialComponents extends Component
 
     public function render()
     {
+        session()->flash('activePage', [
+            'name' => 'Rekam Medis / Detail',
+            'icon' => 'bx bx-book-add'
+        ]);
+        
         return view('livewire.rekam-medis-detial-components');
     }
 }

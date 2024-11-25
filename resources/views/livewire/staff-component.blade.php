@@ -128,15 +128,15 @@
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  window.addEventListener('close-form-modal', event => {
-    $('#modalAdd').modal('hide');
-    $('#modalEdit').modal('hide');
-    $('#modalDelete').modal('hide');
-  });
-  window.addEventListener('open-edit-modal', event => {
-    $('#modalAdd').modal('show');
-  });
-</script>
+  <script>
+    window.addEventListener('close-form-modal', event => {
+      $('#modalAdd').modal('hide');
+      $('#modalEdit').modal('hide');
+      $('#modalDelete').modal('hide');
+    });
+    window.addEventListener('open-edit-modal', event => {
+      $('#modalAdd').modal('show');
+    });
+  </script>
+</div>
