@@ -19,6 +19,7 @@
           <th>Staff</th>
           <th>Pasien</th>
           <th>Total Rekam</th>
+          <th>Status</th>
           <th>Aksi</th>
         </tr>
       </thead>
@@ -29,7 +30,14 @@
           <td>{{ $data->record_num }}</td>
           <td>{{ $data->user_name }}</td>
           <td>{{ $data->patient_name }}</td>
-          <td><span class="badge rounded-pill text-bg-success">14</span></td>
+          <td><strong class="text-success">{{ $data->record_detail_count }}</strong> Rekaman</td>
+          <td>
+            @if ($data->status == true)
+            <span class="badge text-bg-success">Aktif</span>
+            @else
+            <span class="badge text-bg-secondary">Ditutup</span>
+            @endif
+          </td>
           <td>
             <a href="{{ route('rekam-medis-detail', ['id' => $data->id]) }}">
               Detail <i class='bx bx-edit-alt'></i>

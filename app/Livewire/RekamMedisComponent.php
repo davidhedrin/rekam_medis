@@ -122,7 +122,8 @@ class RekamMedisComponent extends Component
     }
 
     public function loadAllData(){
-        $loadData = MedicalRecord::select('id','record_num','user_id','user_name','patient_id','patient_name')->
+        $loadData = MedicalRecord::select('id','record_num','user_id','user_name','patient_id','patient_name','status')->
+        withCount('record_detail')->
         paginate(10);
 
         return [
