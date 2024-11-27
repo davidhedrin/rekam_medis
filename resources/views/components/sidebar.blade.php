@@ -42,7 +42,7 @@
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="#" class="d-flex align-items-center items-center sidebar-link">
+      <a href="{{ route('profile') }}" class="d-flex align-items-center items-center sidebar-link">
         <div>
           <i class='bx bx-user-circle fs-5'></i>
         </div>

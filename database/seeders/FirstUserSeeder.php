@@ -29,13 +29,13 @@ class FirstUserSeeder extends Seeder
         }
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $passHash = Hash::make('david123');
+        $passHash = Hash::make('rkms2024');
         User::create([
-            'username' => 'david123',
+            'username' => 'rkms2024',
             'password' => $passHash,
-            'fullname' => 'David Simbolon',
+            'fullname' => 'Rekam Medis Mandiri',
             'role_id' => 1,
-            'email' => 'david123@gmail.com',
+            'email' => 'rekammedismandiri@gmail.com',
             'email_verified_at' => now(),
             'created_by' => 'SEEDER',
             'created_at' => now(),

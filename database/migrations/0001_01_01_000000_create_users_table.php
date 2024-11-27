@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('role_id')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('status')->nullable()->default(true);
             $table->rememberToken();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
