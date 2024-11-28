@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="{{ asset('assets/boxicons/css/boxicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/font.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css">
-  
+
   @stack('styles')
   @livewireStyles
 </head>
@@ -67,18 +67,38 @@
   <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
   <script src="{{ asset('assets/js/popper.min.js') }}"></script>
   <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="{{ asset('assets/js/sweetalert2@11.js') }}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.5.1/tinymce.min.js" referrerpolicy="origin"></script>
 
   <script>
     const hamBurger = document.querySelector(".toggle-btn");
-      
+    const sidebar = document.querySelector("#sidebar");
+
     $(document).ready(function() {
-      hamBurger.addEventListener("click", function () {
-        document.querySelector("#sidebar").classList.toggle("expand");
+      const keyExpandToggle = 'expand_toggle';
+
+      if (sessionStorage.getItem(keyExpandToggle) === null) {
+        sidebar.classList.add('expand');
+        sessionStorage.setItem(keyExpandToggle, 'true');
+      } else if (sessionStorage.getItem(keyExpandToggle) === 'true') {
+        sidebar.classList.add('expand');
+      } else {
+        sidebar.classList.remove('expand');
+      }
+
+      hamBurger.addEventListener("click", function() {
+        sidebar.classList.toggle("expand");
+
+        if (sidebar.classList.contains("expand")) {
+          sessionStorage.setItem(keyExpandToggle, 'true');
+        } else {
+          sessionStorage.setItem(keyExpandToggle, 'false');
+        }
       });
     });
   </script>
-  
+
   @livewireScripts
   @stack('scripts')
 </body>
