@@ -25,8 +25,8 @@ class HomeComponent extends Component
 
     public function loadData() {
         $auth = Auth::user();
-        $findData = Notes::find($auth->id);
-        $this->conten_notes = $findData->content;
+        $findData = Notes::where('user_id', $auth->id)->first();
+        if($findData) $this->conten_notes = $findData->content;
     }
 
     #[On('set_session_limit')] 

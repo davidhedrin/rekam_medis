@@ -19,7 +19,7 @@
         <li class="nav-item dropdown">
           <div data-bs-toggle="dropdown" class="d-flex align-items-center nav-icon pe-md-0" style="cursor: pointer">
             <div class="me-1">
-              <small>Hi, David Simbolon</small>
+              <small>Hi, {{ Auth::user()->fullname }}</small>
             </div>
             <i class='bx bx-user-circle fs-4'></i>
           </div>
