@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\MedicalRecord;
 use App\Models\MedicalRecordDetail;
@@ -102,7 +104,7 @@ class RekamMedisDetialComponents extends Component
             $newData->diagnosis = $this->diagnosis;
             $newData->drag = $this->drag;
             $newData->suggestion = $this->suggestion;
-            $newData->created_by = $auth->username;
+            $newData->created_by = $auth->fullname;
             $newData->save();
 
             DB::commit();
@@ -301,6 +303,52 @@ class RekamMedisDetialComponents extends Component
             
             session()->flash('msgAlert', [
               'title' => 'Gagal Updated',
+              'status' => 'warning',
+              'message' => $error_msg
+            ]);
+        }
+    }
+
+    public function generatePdf(int $id) {
+        try{
+            $findData = MedicalRecord::with([
+                'user:id,fullname,role_id',
+                'patient:id,no_hp,gender,blood_type',
+
+                'record_detail:record_id,complaint,diagnosis,drag,suggestion,created_by,created_at'
+            ])->
+            select('id','record_num','user_id','user_name','patient_id','patient_name','desc','created_at')->
+            withCount('record_detail')->
+            find($id);
+            if(!$findData){
+                session()->flash('msgAlert', [
+                    'title' => 'Tidak Ditemukan!',
+                    'status' => 'warning',
+                    'message' => 'Data rekam medis tidak ditemukan!'
+                ]);
+                return;
+            }
+
+            $date = Carbon::now();
+            $formattedDate = $date->locale('id')->isoFormat('D MMMM YYYY');
+            $data = [
+                'data' => $findData,
+                'docter' => 'IR. Totok Andi Prasetyo, MT, TN',
+                'paraf_title' => 'Bekasi, ' . $formattedDate
+            ];
+
+            $pdf = Pdf::loadView('Pdf-rekam-medis', $data)->setOption([
+                'defaultPaperSize' => 'a4',
+                'dpi' => 150,
+            ]);
+            return response()->streamDownload(function() use ($pdf){
+                echo $pdf->stream();
+            }, 'rekam_medis.pdf');
+        }catch(Exception $e){
+            $error_msg = $e->getMessage();
+            
+            session()->flash('msgAlert', [
+              'title' => 'Gagal Menyimpan',
               'status' => 'warning',
               'message' => $error_msg
             ]);

@@ -79,23 +79,27 @@
       const keyExpandToggle = 'expand_toggle';
 
       if (sessionStorage.getItem(keyExpandToggle) === null) {
-        sidebar.classList.add('expand');
+        if(sidebar) sidebar.classList.add('expand');
         sessionStorage.setItem(keyExpandToggle, 'true');
       } else if (sessionStorage.getItem(keyExpandToggle) === 'true') {
-        sidebar.classList.add('expand');
+        if(sidebar) sidebar.classList.add('expand');
       } else {
-        sidebar.classList.remove('expand');
+        if(sidebar) sidebar.classList.remove('expand');
       }
 
-      hamBurger.addEventListener("click", function() {
-        sidebar.classList.toggle("expand");
-
-        if (sidebar.classList.contains("expand")) {
-          sessionStorage.setItem(keyExpandToggle, 'true');
-        } else {
-          sessionStorage.setItem(keyExpandToggle, 'false');
-        }
-      });
+      if(hamBurger){
+        hamBurger.addEventListener("click", function() {
+          if(sidebar) sidebar.classList.toggle("expand");
+  
+          if(sidebar) {
+            if (sidebar.classList.contains("expand")) {
+              sessionStorage.setItem(keyExpandToggle, 'true');
+            } else {
+              sessionStorage.setItem(keyExpandToggle, 'false');
+            }
+          }
+        });
+      }
     });
   </script>
 

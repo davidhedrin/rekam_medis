@@ -57,7 +57,7 @@
           @if ($recordDatas->status == true)
           <button wire:click='confirmStatus({{ $recordDatas->id }})' class="btn btn-success me-2">Selesai</button>
           @endif
-          <button class="btn btn-primary">Print <i class='bx bx-printer'></i></button>
+          <button wire:click='generatePdf({{ $recordDatas->id }})' class="btn btn-primary">Print <i class='bx bx-printer'></i></button>
         </div>
         @if ($recordDatas->status == true)
         <div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-start">
