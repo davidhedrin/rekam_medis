@@ -9,7 +9,7 @@
         <div class="col-lg-8 col-md-12">
           <div class="row">
             <div class="col-md-2">
-              <img src="{{ asset('assets/img/user-profile.png') }}" class="img-fluid rounded-circle" alt="Foto Profil">
+              <img src="{{ env('ASSETS_URL') }}/img/user-profile.png" class="img-fluid rounded-circle" alt="Foto Profil">
             </div>
             <div class="col-md-10">
               <h5>{{ $loadUser->fullname }}</h5>

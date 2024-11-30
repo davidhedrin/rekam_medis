@@ -8,7 +8,7 @@
       <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
         style="background: #103cbe;">
         <div class="featured-image mb-3">
-          <img src="{{ asset('assets/img/1.png') }}" class="img-fluid" style="width: 250px;">
+          <img src="{{ env('ASSETS_URL') }}/img/1.png" class="img-fluid" style="width: 250px;">
         </div>
         <div class="text-white fs-2">Be Verified</div>
         <small class="text-white text-wrap text-center">Join experienced Designers on this platform.</small>

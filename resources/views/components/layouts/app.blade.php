@@ -7,10 +7,10 @@
 
   <title>{{ env('APP_NAME', 'Rekam Medis') }}</title>
 
-  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
-  <link rel="stylesheet" href="{{ asset('assets/boxicons/css/boxicons.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/font.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css">
+  <link rel="stylesheet" href="{{ env('ASSETS_URL') }}/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="{{ env('ASSETS_URL') }}/boxicons/css/boxicons.min.css">
+  <link rel="stylesheet" href="{{ env('ASSETS_URL') }}/css/font.css">
+  <link rel="stylesheet" href="{{ env('ASSETS_URL') }}/css/style.css" type="text/css">
 
   @stack('styles')
   @livewireStyles
@@ -64,10 +64,10 @@
   {{ $slot }}
   @endif
 
-  <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-  <script src="{{ asset('assets/js/popper.min.js') }}"></script>
-  <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/js/sweetalert2@11.js') }}"></script>
+  <script src="{{ env('ASSETS_URL') }}/js/jquery.min.js"></script>
+  <script src="{{ env('ASSETS_URL') }}/js/popper.min.js"></script>
+  <script src="{{ env('ASSETS_URL') }}/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ env('ASSETS_URL') }}/js/sweetalert2@11.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.5.1/tinymce.min.js" referrerpolicy="origin"></script>
 
