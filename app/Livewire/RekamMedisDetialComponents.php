@@ -341,9 +341,11 @@ class RekamMedisDetialComponents extends Component
                 'defaultPaperSize' => 'a4',
                 'dpi' => 150,
             ]);
+
+            $pdfName = $findData->patient_name . $date->timestamp;
             return response()->streamDownload(function() use ($pdf){
                 echo $pdf->stream();
-            }, 'rekam_medis.pdf');
+            }, $pdfName . '.pdf');
         }catch(Exception $e){
             $error_msg = $e->getMessage();
             
