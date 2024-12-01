@@ -3,7 +3,7 @@
   @livewire('components.toast-alert')
   @endif
   
-  <div class="mb-2 text-end">
+  <div class="d-flex justify-content-end mb-2">
     <button wire:click='ClearData()' type="button" class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalAdd">
       Tambah
       <i class='bx bx-plus-circle fs-5 ms-1'></i>

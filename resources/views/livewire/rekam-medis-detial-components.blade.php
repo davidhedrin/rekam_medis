@@ -90,9 +90,9 @@
           <th>#</th>
           <th>Tanggal</th>
           <th>Keluhan</th>
+          <th>Pemeriksaan Fisis</th>
           <th>Diagnosa</th>
-          <th>Obat</th>
-          <th>Saran/Masukan</th>
+          <th>Obat & Saran</th>
           <th>PIC</th>
           <th>Aksi</th>
         </tr>
@@ -103,9 +103,9 @@
           <th>{{ $recordDetails->firstItem() + $index }}</th>
           <td>{{ $data->created_at }}</td>
           <td>{{ $data->complaint }}</td>
+          <td>{{ $data->physical_exam }}</td>
           <td>{{ $data->diagnosis }}</td>
-          <td>{{ $data->drag }}</td>
-          <td>{{ $data->suggestion }}</td>
+          <td>{{ $data->medicine_advice }}</td>
           <td>{{ $data->created_by }}</td>
           <td>
             <a wire:click='openDetailData({{ $data->id }})' href="javascript:void(0)">
@@ -135,31 +135,31 @@
         <form wire:submit.prevent="actionForm()">
           <div class="modal-body">
             <div class="row">
-              <div class="col-md-6 mb-2">
+              <div class="col-md-12 mb-2">
                 <div>
                   <label for="complaint" class="form-label m-0">Keluhan:<span class="text-danger">*</span></label>
-                  <input wire:model='complaint' type="text" class="form-control" id="complaint" placeholder="Masukkan keluhan pasien">
+                  <textarea wire:model='complaint' class="form-control" id="complaint" rows="2" placeholder="Masukkan keluhan pasien"></textarea>
                 </div>
                 @error('complaint')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>
-              <div class="col-md-6 mb-2">
+              <div class="col-md-12 mb-2">
+                <div>
+                  <label for="physical_exam" class="form-label m-0">Pemeriksaan Fisis:</label>
+                  <textarea wire:model='physical_exam' class="form-control" id="physical_exam" rows="2" placeholder="Masukkan pemeriksaan fisis"></textarea>
+                </div>
+              </div>
+              <div class="col-md-12 mb-2">
                 <div>
                   <label for="diagnosis" class="form-label m-0">Diagnosa:</label>
-                  <input wire:model='diagnosis' type="text" class="form-control" id="diagnosis" placeholder="Masukkan diagnosa pasien">
+                  <textarea wire:model='diagnosis' class="form-control" id="diagnosis" rows="2" placeholder="Masukkan diagnosa pasien"></textarea>
                 </div>
               </div>
               <div class="col-md-12 mb-2">
                 <div>
-                  <label for="drag" class="form-label m-0">Obat:</label>
-                  <textarea wire:model='drag' class="form-control" id="drag" rows="3" placeholder="Masukkan obat keluhan"></textarea>
-                </div>
-              </div>
-              <div class="col-md-12 mb-2">
-                <div>
-                  <label for="suggestion" class="form-label m-0">Saran/Masukan:</label>
-                  <textarea wire:model='suggestion' class="form-control" id="suggestion" rows="3" placeholder="Masukkan saran/masukkan"></textarea>
+                  <label for="medicine_advice" class="form-label m-0">Obat & Saran:</label>
+                  <textarea wire:model='medicine_advice' class="form-control" id="medicine_advice" rows="2" placeholder="Masukkan obat dan saran"></textarea>
                 </div>
               </div>
             </div>

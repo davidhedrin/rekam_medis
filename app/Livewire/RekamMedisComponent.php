@@ -19,7 +19,7 @@ class RekamMedisComponent extends Component
     protected $paginationTheme = 'bootstrap';
     
     public $record_num, $user_id, $user_name, $patient_id, $patient_name, $desc;
-    public $idDataEdit, $isStore = true;
+    public $idDataEdit, $isStore = true, $inputSearch = '';
 
     public $listPatient = [], $searchPatient = '';
     public $selectedPatient = null;
@@ -122,7 +122,9 @@ class RekamMedisComponent extends Component
     }
 
     public function loadAllData(){
-        $loadData = MedicalRecord::select('id','record_num','user_id','user_name','patient_id','patient_name','status')->
+        $loadData = MedicalRecord::whereRaw('LOWER(record_num) LIKE ?', ['%' . strtolower($this->inputSearch) . '%'])->
+        orWhereRaw('LOWER(patient_name) LIKE ?', ['%' . strtolower($this->inputSearch) . '%'])->
+        select('id','record_num','user_id','user_name','patient_id','patient_name','status')->
         withCount('record_detail')->
         paginate(10);
 

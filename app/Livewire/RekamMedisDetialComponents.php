@@ -19,7 +19,7 @@ class RekamMedisDetialComponents extends Component
 {
     public $detail_id, $recordDatas = null;
 
-    public $record_num, $record_id, $complaint, $diagnosis, $drag, $suggestion;
+    public $record_num, $record_id, $complaint, $physical_exam, $diagnosis, $medicine_advice;
     public $idDataEdit, $isStore = true;
 
     public function mount($id)
@@ -50,9 +50,9 @@ class RekamMedisDetialComponents extends Component
         $this->record_num = null;
         $this->record_id = null;
         $this->complaint = null;
+        $this->physical_exam = null;
         $this->diagnosis = null;
-        $this->drag = null;
-        $this->suggestion = null;
+        $this->medicine_advice = null;
 
         $this->isStore = true;
         $this->idDataEdit = null;
@@ -101,9 +101,9 @@ class RekamMedisDetialComponents extends Component
             $newData->record_num = $record_num;
             $newData->record_id = $this->recordDatas->id;
             $newData->complaint = $this->complaint;
+            $newData->physical_exam = $this->physical_exam;
             $newData->diagnosis = $this->diagnosis;
-            $newData->drag = $this->drag;
-            $newData->suggestion = $this->suggestion;
+            $newData->medicine_advice = $this->medicine_advice;
             $newData->created_by = $auth->fullname;
             $newData->save();
 
@@ -142,9 +142,9 @@ class RekamMedisDetialComponents extends Component
 
         $this->isStore = false;
         $this->complaint = $findData->complaint;
+        $this->physical_exam = $findData->physical_exam;
         $this->diagnosis = $findData->diagnosis;
-        $this->drag = $findData->drag;
-        $this->suggestion = $findData->suggestion;
+        $this->medicine_advice = $findData->medicine_advice;
         $this->dispatch('open-edit-modal');
 
         $this->idDataEdit = $id;
@@ -170,9 +170,9 @@ class RekamMedisDetialComponents extends Component
             DB::beginTransaction();
 
             $findData->complaint = $this->complaint;
+            $findData->physical_exam = $this->physical_exam;
             $findData->diagnosis = $this->diagnosis;
-            $findData->drag = $this->drag;
-            $findData->suggestion = $this->suggestion;
+            $findData->medicine_advice = $this->medicine_advice;
             $findData->updated_by = $auth->username;
             $findData->save();
             
@@ -315,7 +315,7 @@ class RekamMedisDetialComponents extends Component
                 'user:id,fullname,role_id',
                 'patient:id,no_hp,gender,blood_type',
 
-                'record_detail:record_id,complaint,diagnosis,drag,suggestion,created_by,created_at'
+                'record_detail:record_id,complaint,physical_exam,diagnosis,medicine_advice,created_by,created_at'
             ])->
             select('id','record_num','user_id','user_name','patient_id','patient_name','desc','created_at')->
             withCount('record_detail')->
@@ -333,7 +333,7 @@ class RekamMedisDetialComponents extends Component
             $formattedDate = $date->locale('id')->isoFormat('D MMMM YYYY');
             $data = [
                 'data' => $findData,
-                'docter' => 'IR. Totok Andi Prasetyo, MT, TN',
+                'docter' => 'IR. Totok Andi Prasetyo MT, TN',
                 'paraf_title' => 'Bekasi, ' . $formattedDate
             ];
 
@@ -359,7 +359,7 @@ class RekamMedisDetialComponents extends Component
 
     public function loadAllData() {
         $recordDetails = MedicalRecordDetail::where('record_id', $this->recordDatas->id)->
-        select('id','record_num','record_id','complaint','diagnosis','drag','suggestion','created_by','created_at')->
+        select('id','record_num','record_id','complaint','physical_exam','diagnosis','medicine_advice','created_by','created_at')->
         paginate(10);
 
         return [

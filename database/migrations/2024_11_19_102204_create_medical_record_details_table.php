@@ -14,16 +14,18 @@ return new class extends Migration
         Schema::create('medical_record_details', function (Blueprint $table) {
             $table->id();
             $table->string('record_num')->unique();
-            $table->bigInteger('record_id')->nullable();
+            $table->unsignedBigInteger('record_id')->nullable();
             $table->string('complaint')->nullable();
+            $table->string('physical_exam')->nullable();
             $table->string('diagnosis')->nullable();
-            $table->string('drag')->nullable();
-            $table->string('suggestion')->nullable();
+            $table->string('medicine_advice')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            
+            $table->foreign('record_id')->references('id')->on('medical_records')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

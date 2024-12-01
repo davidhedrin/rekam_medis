@@ -26,6 +26,14 @@
       </a>
     </li>
     <li class="sidebar-item">
+      <a href="{{ route('report-medis') }}" class="d-flex align-items-center items-center sidebar-link">
+        <div>
+          <i class='bx bx-receipt fs-5'></i>
+        </div>
+        <span>Report Medis</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
       <a href="{{ route('patient') }}" class="d-flex align-items-center items-center sidebar-link">
         <div>
           <i class='bx bx-user-pin fs-5'></i>
