@@ -9,8 +9,84 @@
 
   <link rel="stylesheet" href="{{ env('ASSETS_URL') }}/css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="{{ env('ASSETS_URL') }}/boxicons/css/boxicons.min.css">
-  <link rel="stylesheet" href="{{ env('ASSETS_URL') }}/css/font.css">
   <link rel="stylesheet" href="{{ env('ASSETS_URL') }}/css/style.css" type="text/css">
+  {{-- <link rel="stylesheet" href="{{ env('ASSETS_URL') }}/css/font.css"> --}}
+
+  <style>
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-Regular.ttf") format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-Bold.ttf") format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-Italic.ttf") format('truetype');
+      font-weight: normal;
+      font-style: italic;
+    }
+
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-BoldItalic.ttf") format('truetype');
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-Light.ttf") format('truetype');
+      font-weight: 300; /* Light font */
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-LightItalic.ttf") format('truetype');
+      font-weight: 300; /* Light font */
+      font-style: italic;
+    }
+
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-SemiBold.ttf") format('truetype');
+      font-weight: 600; /* SemiBold font */
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-SemiBoldItalic.ttf") format('truetype');
+      font-weight: 600; /* SemiBold font */
+      font-style: italic;
+    }
+
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-ExtraBold.ttf") format('truetype');
+      font-weight: 800; /* ExtraBold font */
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Poppins';
+      src: url("{{ env('ASSETS_URL') }}/fonts/Poppins-ExtraBoldItalic.ttf") format('truetype');
+      font-weight: 800; /* ExtraBold font */
+      font-style: italic;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
 
   @stack('styles')
   @livewireStyles
