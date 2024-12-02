@@ -333,11 +333,11 @@ class RekamMedisDetialComponents extends Component
             $formattedDate = $date->locale('id')->isoFormat('D MMMM YYYY');
             $data = [
                 'data' => $findData,
-                'docter' => 'IR. Totok Andi Prasetyo MT, TN',
+                'docter' => 'Dr. Agung PTN',
                 'paraf_title' => 'Bekasi, ' . $formattedDate
             ];
 
-            $pdf = Pdf::loadView('Pdf-rekam-medis', $data)->setOption([
+            $pdf = Pdf::loadView('pdf.rekam-medis-detail', $data)->setOption([
                 'defaultPaperSize' => 'a4',
                 'dpi' => 150,
             ]);
@@ -350,7 +350,7 @@ class RekamMedisDetialComponents extends Component
             $error_msg = $e->getMessage();
             
             session()->flash('msgAlert', [
-              'title' => 'Gagal Menyimpan',
+              'title' => 'PDF Gagal',
               'status' => 'warning',
               'message' => $error_msg
             ]);

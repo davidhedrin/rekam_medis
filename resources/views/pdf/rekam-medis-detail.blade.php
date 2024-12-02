@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rekam Medis - Print Template</title>
+  <title>Rekam Medis</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -107,7 +107,7 @@
 
 <body>
   <div style="text-align: center">
-    <h4 style="margin-bottom: 0">Klinik Mandiri THB</h4>
+    <h4 style="margin-bottom: 0">Rekam Medis Mandiri THB</h4>
     <small>Jln. Raya Kaliabang Tengah No.2, Kec. Medan Satria, Bekasi, 17125</small>
   </div>
 

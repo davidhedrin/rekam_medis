@@ -58,6 +58,53 @@ class ReportRekamMedisComponent extends Component
         $this->dispatch('open-modal');
     }
 
+    public function generatePdf() {
+        try{
+            $dateNow = Carbon::now();
+            if(!$this->startDateSearch || $this->startDateSearch == "") $this->startDateSearch = $dateNow->format('Y-m-d');
+            if(!$this->endDateSearch || $this->endDateSearch == "") $this->endDateSearch = $dateNow->format('Y-m-d');
+
+            $findData = MedicalRecordDetail::
+            with([
+                'master_record:id,patient_id,record_num,user_name,patient_name',
+                'master_record.patient:id,no_hp,gender,blood_type',
+            ])->
+            select('id','record_num','record_id','complaint','physical_exam','diagnosis','medicine_advice','created_by','created_at')->
+            whereBetween('created_at', [
+                $this->startDateSearch && $this->startDateSearch != "" ? Carbon::parse($this->startDateSearch)->format('Y-m-d 00:00:00') : $dateNow->startOfDay(),
+                $this->endDateSearch && $this->endDateSearch != "" ? Carbon::parse($this->endDateSearch)->format('Y-m-d 23:59:59') : $dateNow->endOfDay()
+            ])->get();
+
+            $date = Carbon::now();
+            $formattedDate = $date->locale('id')->isoFormat('D MMMM YYYY');
+            $data = [
+                'data' => $findData,
+                'docter' => 'Dr. Agung PTN',
+                'paraf_title' => 'Bekasi, ' . $formattedDate,
+                'startDateSearch' => $this->startDateSearch,
+                'endDateSearch' => $this->endDateSearch,
+            ];
+
+            $pdf = Pdf::loadView('pdf.report-medis', $data)->setOption([
+                'defaultPaperSize' => 'a4',
+                'dpi' => 150,
+            ]);
+
+            $pdfName = 'rekam_medis' . $this->startDateSearch . ' sd ' . $this->endDateSearch;
+            return response()->streamDownload(function() use ($pdf){
+                echo $pdf->stream();
+            }, $pdfName . '.pdf');
+        }catch(Exception $e){
+            $error_msg = $e->getMessage();
+            
+            session()->flash('msgAlert', [
+              'title' => 'PDF Gagal',
+              'status' => 'warning',
+              'message' => $error_msg
+            ]);
+        }
+    }
+
     public function loadAllData() {
         $dateNow = Carbon::now();
         if(!$this->startDateSearch || $this->startDateSearch == "") $this->startDateSearch = $dateNow->format('Y-m-d');

@@ -11,11 +11,19 @@
     <div class="col-12 col-md-6 mb-2 d-flex justify-content-end">
       <div class="d-flex flex-column flex-md-row w-100">
         <input wire:model.live="startDateSearch" class="form-control mb-2 mb-md-0 me-md-2" type="date" required>
-        <input wire:model.live="endDateSearch" class="form-control mb-2 mb-md-0 me-md-2 clear_remove" type="date" required>
-        <button wire:click='refreshDateParam()' type="button" class="btn btn-outline-primary ms-2 clear_remove"
-          style="line-height: 0">
-          <i class='bx bx-refresh fs-4'></i>
-        </button>
+        <input wire:model.live="endDateSearch" class="form-control mb-2 mb-md-0 me-md-2" type="date" required>
+        <div class="d-inline-flex align-items-center">
+          <div>
+            <button wire:click='refreshDateParam()' type="button" class="btn btn-outline-primary ms-2" style="line-height: 0">
+              <i class='bx bx-refresh fs-4'></i>
+            </button>
+          </div>
+          <div>
+            <button wire:click='generatePdf()' type="button" class="btn btn-outline-success ms-2 d-flex align-items-center">
+              Print <i class='bx bx-printer fs-4 ms-2'></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
