@@ -185,9 +185,9 @@
           <th><small>#</small></th>
           <th><small>Tanggal</small></th>
           <th><small>Keluhan</small></th>
+          <th><small>Pemeriksaan Fisis</small></th>
           <th><small>Diagnosa</small></th>
-          <th><small>Obat</small></th>
-          <th><small>Saran/Masukan</small></th>
+          <th><small>Obat & Saran</small></th>
           <th><small>PIC</small></th>
         </tr>
       </thead>
@@ -197,9 +197,9 @@
           <th><small>{{ $index+1 }}</small></th>
           <td><small>{{ $rc['created_at'] }}</small></td>
           <td><small>{{ $rc['complaint'] }}</small></td>
+          <td><small>{{ $rc['physical_exam'] }}</small></td>
           <td><small>{{ $rc['diagnosis'] }}</small></td>
-          <td><small>{{ $rc['drag'] }}</small></td>
-          <td><small>{{ $rc['suggestion'] }}</small></td>
+          <td><small>{{ $rc['medicine_advice'] }}</small></td>
           <td><small>{{ $rc['created_by'] }}</small></td>
         </tr>
         @empty
