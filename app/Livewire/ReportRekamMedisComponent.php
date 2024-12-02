@@ -35,7 +35,13 @@ class ReportRekamMedisComponent extends Component
 
     public function detailRekamMedis(int $data_id) {
         $findData = MedicalRecordDetail::
-        with(['master_record:id,record_num,user_name,patient_name,status'])->
+        with([
+            'master_record:id,user_id,patient_id,record_num,user_name,patient_name,status,desc',
+            'master_record.patient:id,no_hp,gender,blood_type',
+            
+            'master_record.user:id,fullname,role_id',
+            'master_record.user.master_role:id,name'
+        ])->
         select('id','record_num','record_id','complaint','physical_exam','diagnosis','medicine_advice','created_by','created_at')->
         find($data_id);
         

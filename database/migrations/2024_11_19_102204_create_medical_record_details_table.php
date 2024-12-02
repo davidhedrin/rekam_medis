@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('record_num')->unique();
             $table->unsignedBigInteger('record_id')->nullable();
-            $table->string('complaint')->nullable();
-            $table->string('physical_exam')->nullable();
-            $table->string('diagnosis')->nullable();
-            $table->string('medicine_advice')->nullable();
+            $table->longText('complaint')->nullable();
+            $table->longText('physical_exam')->nullable();
+            $table->longText('diagnosis')->nullable();
+            $table->longText('medicine_advice')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
