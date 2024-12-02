@@ -17,7 +17,7 @@ class PatientComponent extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $patient_id, $fullname, $no_hp, $gender, $birth_date, $birth_place, $blood_type, $religion, $address, $desc;
-    public $idDataEdit, $isStore = true;
+    public $idDataEdit, $isStore = true, $inputSearch = '';
     public $bloodTypes = [
         [ 'text' => 'A', 'value' => 'A' ],
         [ 'text' => 'B', 'value' => 'B' ],
@@ -193,7 +193,9 @@ class PatientComponent extends Component
     }
 
     public function loadAllData(){
-        $loadData = Patient::select('id','patient_id','fullname','no_hp','gender','birth_date')->
+        $loadData = Patient::whereRaw('LOWER(fullname) LIKE ?', ['%' . strtolower($this->inputSearch) . '%'])->
+        orWhereRaw('LOWER(patient_id) LIKE ?', ['%' . strtolower($this->inputSearch) . '%'])->
+        select('id','patient_id','fullname','no_hp','gender','birth_date')->
         paginate(10);
 
         return [

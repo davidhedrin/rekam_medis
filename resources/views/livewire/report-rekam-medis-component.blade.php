@@ -7,6 +7,17 @@
     <div class="col-auto mb-2">
       <input wire:model.live="inputSearch" class="form-control" type="search" placeholder="Temukan..." aria-label="Search">
     </div>
+
+    <div class="col-12 col-md-6 mb-2 d-flex justify-content-end">
+      <div class="d-flex flex-column flex-md-row w-100">
+        <input wire:model.live="startDateSearch" class="form-control mb-2 mb-md-0 me-md-2" type="date" required>
+        <input wire:model.live="endDateSearch" class="form-control mb-2 mb-md-0 me-md-2 clear_remove" type="date" required>
+        <button wire:click='refreshDateParam()' type="button" class="btn btn-outline-primary ms-2 clear_remove"
+          style="line-height: 0">
+          <i class='bx bx-refresh fs-4'></i>
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="table-responsive">
@@ -50,9 +61,9 @@
           </td>
         </tr>
         @empty
-          <tr>
-            <td colspan="7" class="text-center italic">Tidak ada data ditemukan!</td>
-          </tr>
+        <tr>
+          <td colspan="7" class="text-center italic">Tidak ada data ditemukan!</td>
+        </tr>
         @endforelse
       </tbody>
     </table>
@@ -61,8 +72,9 @@
     {{ $loadData->links() }}
   </div>
 
-  
-  <div wire:ignore.self class="modal fade" id="modalDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+  <div wire:ignore.self class="modal fade" id="modalDetail" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">

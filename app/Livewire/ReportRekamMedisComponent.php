@@ -20,8 +20,18 @@ class ReportRekamMedisComponent extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $inputSearch = '';
+    public $inputSearch = '', $startDateSearch, $endDateSearch;
     public $detailData;
+
+    public function mount() {
+        $this->refreshDateParam();
+    }
+
+    public function refreshDateParam() {
+        $dateNow = Carbon::now();
+        $this->startDateSearch = $dateNow->format('Y-m-d');
+        $this->endDateSearch = $dateNow->format('Y-m-d');
+    }
 
     public function detailRekamMedis(int $data_id) {
         $findData = MedicalRecordDetail::
@@ -43,12 +53,20 @@ class ReportRekamMedisComponent extends Component
     }
 
     public function loadAllData() {
+        $dateNow = Carbon::now();
+        if(!$this->startDateSearch || $this->startDateSearch == "") $this->startDateSearch = $dateNow->format('Y-m-d');
+        if(!$this->endDateSearch || $this->endDateSearch == "") $this->endDateSearch = $dateNow->format('Y-m-d');
+
         $loadData = MedicalRecordDetail::whereHas('master_record', function($query) {
             $query->whereRaw('LOWER(record_num) LIKE ?', ['%' . strtolower($this->inputSearch) . '%'])
             ->orWhereRaw('LOWER(patient_name) LIKE ?', ['%' . strtolower($this->inputSearch) . '%']);
         })
         ->with(['master_record:id,record_num,user_name,patient_name,status'])
         ->select('id','record_num','record_id','created_at')
+        ->whereBetween('created_at', [
+            $this->startDateSearch && $this->startDateSearch != "" ? Carbon::parse($this->startDateSearch)->format('Y-m-d 00:00:00') : $dateNow->startOfDay(),
+            $this->endDateSearch && $this->endDateSearch != "" ? Carbon::parse($this->endDateSearch)->format('Y-m-d 23:59:59') : $dateNow->endOfDay()
+        ])
         ->paginate(10);
 
         return [
