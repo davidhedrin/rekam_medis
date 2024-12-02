@@ -33,7 +33,7 @@ class FirstUserSeeder extends Seeder
         User::create([
             'username' => 'rkms2024',
             'password' => $passHash,
-            'fullname' => 'IR. Totok Andi Prasetyo MT, TN',
+            'fullname' => 'dr. Agung PTN',
             'role_id' => 1,
             'email' => 'rekammedismandiri@gmail.com',
             'email_verified_at' => now(),
